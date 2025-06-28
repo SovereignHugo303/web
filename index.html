@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sovereign Hugo Delicious Bites - Online Food Ordering</title>
+    <style>
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
+
+      body {
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin-bottom: 20px;
+        color: #222;
+      }
+
+      p {
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        display: inline-block;
+        background: #ff6b6b;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
+
+      .btn:hover {
+        background: #ff5252;
+      }
+
+      /* Header & Navigation */
+      header {
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 0;
+      }
+
+      .logo {
+        text-decoration: none;
+      }
+
+      .logo img {
+        transition: transform 0.3s;
+      }
+
+      .logo:hover img {
+        transform: scale(1.05);
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+      }
+
+      .nav-links li {
+        margin-left: 30px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: #ff6b6b;
+      }
+
+      .hamburger {
+        display: none;
+        cursor: pointer;
+      }
+
+      /* Hero Section */
+      #home {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/40c929bd-c7b3-489f-a9a8-252dfd41982e.png")
+            no-repeat center center/cover;
+        height: 100vh;
+        color: white;
+        display: flex;
+        align-items: center;
+        text-align: center;
+      }
+
+      .hero-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .hero-content h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+      }
+
+      .hero-content p {
+        font-size: 20px;
+        margin-bottom: 30px;
+      }
+
+      /* Menu Section */
+      #menu {
+        background: white;
+      }
+
+      .menu-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .menu-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+
+      .menu-item {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .menu-item:hover {
+        transform: translateY(-10px);
+      }
+
+      .menu-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .menu-item-content {
+        padding: 20px;
+      }
+
+      .menu-item-content h3 {
+        font-size: 22px;
+      }
+
+      .price {
+        color: #ff6b6b;
+        font-weight: bold;
+        font-size: 20px;
+        margin: 10px 0;
+      }
+
+      /* About Section */
+      #about {
+        background: #f1f1f1;
+      }
+
+      .about-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+      }
+
+      .about-text {
+        padding-right: 20px;
+      }
+
+      .about-image img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Gallery Section */
+      #gallery {
+        background: white;
+      }
+
+      .gallery-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .gallery-item {
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.5s;
+      }
+
+      .gallery-item img:hover {
+        transform: scale(1.1);
+      }
+
+      /* Contact Section */
+      #contact {
+        background: #f1f1f1;
+      }
+
+      .contact-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 40px;
+      }
+
+      .contact-info {
+        margin-bottom: 30px;
+      }
+
+      .contact-info h3 {
+        margin-bottom: 15px;
+      }
+
+      .contact-form input,
+      .contact-form textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+
+      .contact-form textarea {
+        height: 150px;
+      }
+
+      /* Footer */
+      footer {
+        background: #222;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: block;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 80px;
+          left: -100%;
+          background: white;
+          width: 100%;
+          flex-direction: column;
+          align-items: center;
+          padding: 20px 0;
+          transition: left 0.3s;
+        }
+
+        .nav-links.active {
+          left: 0;
+        }
+
+        .nav-links li {
+          margin: 15px 0;
+        }
+
+        .hero-content h1 {
+          font-size: 36px;
+        }
+
+        .hero-content p {
+          font-size: 18px;
+        }
+
+        .about-content {
+          grid-template-columns: 1fr;
+        }
+
+        .about-text {
+          padding-right: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header & Navigation -->
+    <header>
+      <div class="container">
+        <nav>
+          <a href="#" class="logo">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e56ad5cc-d2ac-4417-a0d4-c554b3124bac.png"
+              alt="Sovereign Hugo Delicious Bites Restaurant Logo"
+              style="max-height: 50px"
+            />
+          </a>
+          <div class="hamburger">☰</div>
+          <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home">
+      <div class="container">
+        <div class="hero-content">
+          <h1>Delicious Food Delivered To Your Door</h1>
+          <p>
+            Order your favorite meals from our restaurant and enjoy the taste of
+            homemade food
+          </p>
+          <a href="#menu" class="btn">View Menu</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu">
+      <div class="container">
+        <div class="menu-header">
+          <h2>Our Menu</h2>
+          <p>Discover our delicious selection of meals</p>
+        </div>
+        <div class="menu-items">
+          <!-- Menu Item 1 -->
+          <div class="menu-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/58d460b7-9646-49b4-a508-022708bd8052.png"
+              alt="Artisan Margherita Pizza with fresh basil and premium mozzarella"
+            />
+            <div class="menu-item-content">
+              <h3>Margherita Pizza</h3>
+              <p>
+                Classic pizza with tomato sauce, mozzarella, and fresh basil
+              </p>
+              <div class="price">$12.99</div>
+              <a href="#" class="btn">Order Now</a>
+            </div>
+          </div>
+
+          <!-- Menu Item 2 -->
+          <div class="menu-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/277fa1f0-6669-48e2-bbfa-f2032486ab06.png"
+              alt="Juicy beef burger with cheese, lettuce, tomato and special sauce on a sesame bun"
+            />
+            <div class="menu-item-content">
+              <h3>Classic Burger</h3>
+              <p>
+                Juicy beef patty with cheese, lettuce, tomato, and special sauce
+              </p>
+              <div class="price">$9.99</div>
+              <a href="#" class="btn">Order Now</a>
+            </div>
+          </div>
+
+          <!-- Menu Item 3 -->
+          <div class="menu-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0bb2f72c-0490-4c3b-b2bf-364d5bf13cd9.png"
+              alt="Creamy fettuccine alfredo pasta with parmesan cheese and parsley garnish"
+            />
+            <div class="menu-item-content">
+              <h3>Fettuccine Alfredo</h3>
+              <p>Creamy pasta with parmesan cheese and parsley</p>
+              <div class="price">$14.99</div>
+              <a href="#" class="btn">Order Now</a>
+            </div>
+          </div>
+
+          <!-- Menu Item 4 -->
+          <div class="menu-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e0f2be03-3ca7-418b-9540-525c4a26714e.png"
+              alt="Fresh garden salad with mixed greens, cherry tomatoes, cucumber and vinaigrette dressing"
+            />
+            <div class="menu-item-content">
+              <h3>Garden Salad</h3>
+              <p>Fresh mixed greens with tomatoes, cucumber, and vinaigrette</p>
+              <div class="price">$7.99</div>
+              <a href="#" class="btn">Order Now</a>
+            </div>
+          </div>
+
+          <!-- Menu Item 5 -->
+          <div class="menu-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5a2252f0-b2c6-4674-bf88-f58115c0b2c8.png"
+              alt="Chocolate lava cake with vanilla ice cream and chocolate drizzle"
+            />
+            <div class="menu-item-content">
+              <h3>Chocolate Lava Cake</h3>
+              <p>
+                Warm chocolate cake with a molten center, served with ice cream
+              </p>
+              <div class="price">$6.99</div>
+              <a href="#" class="btn">Order Now</a>
+            </div>
+          </div>
+
+          <!-- Menu Item 6 -->
+          <div class="menu-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2069a987-92d5-432d-b859-476bdf06c66c.png"
+              alt="Refreshing lemonade with mint leaves and ice cubes in a tall glass"
+            />
+            <div class="menu-item-content">
+              <h3>Fresh Lemonade</h3>
+              <p>Homemade lemonade with fresh lemons and mint</p>
+              <div class="price">$3.99</div>
+              <a href="#" class="btn">Order Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text">
+            <h2>About Our Restaurant</h2>
+            <p>
+              Welcome to Sovereign Hugo Delicious Bites, where we serve
+              high-quality, delicious food made with love and fresh ingredients.
+              Our restaurant was founded in 2010 with the mission to bring
+              authentic flavors to our community.
+            </p>
+            <p>
+              Our chefs have over 20 years of combined experience in creating
+              mouth-watering dishes that will satisfy your cravings. We source
+              our ingredients locally whenever possible to support our community
+              and ensure freshness.
+            </p>
+            <p>
+              Whether you're dining in or ordering for delivery, we promise to
+              provide you with an exceptional culinary experience that will keep
+              you coming back for more.
+            </p>
+          </div>
+          <div class="about-image">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5d6c81d8-8cbc-44fb-aad3-b8df1557575d.png"
+              alt="Elegant interior of Sovereign Hugo Delicious Bites restaurant featuring modern decor with warm lighting"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+      <div class="container">
+        <div class="gallery-header">
+          <h2>Food Gallery</h2>
+          <p>Take a look at some of our delicious creations</p>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2e2b9698-d8b2-4d03-8735-0af64006a759.png"
+              alt="Premium spaghetti carbonara with authentic Italian ingredients"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/21155ba0-2bec-4a4f-83e6-9fdc71a3eeac.png"
+              alt="Grilled salmon with asparagus and lemon wedges on a white plate"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/00e18897-12c8-452e-9bc4-4dc45a7cbab5.png"
+              alt="Colorful vegetarian platter with hummus, falafel, and fresh vegetables"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e3f593ae-0e94-4e21-bf27-8a83758bcd04.png"
+              alt="Artisan bread basket with various types of freshly baked bread"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/986ccff5-a3dd-4957-9dd1-3eedea44e0bd.png"
+              alt="Chef preparing food in our kitchen with fresh ingredients"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7e80803d-d821-4737-8ad1-0c2fee864cc3.png"
+              alt="Decadent chocolate dessert with berries and powdered sugar"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="container">
+        <h2>Contact Us</h2>
+        <div class="contact-container">
+          <div class="contact-info">
+            <h3>Get in Touch</h3>
+            <p>Have questions or want to place an order? Reach out to us!</p>
+            <p><strong>Address:</strong> 23 Food Street, Zomba City</p>
+            <p><strong>Phone:</strong> +265 889 92 91 52 / +265 883 44 30 80</p>
+            <p>
+              <strong>Email:</strong> info@sovereignhugo.com /
+              bandaalfred303@gmail.com
+            </p>
+            <p><strong>Opening Hours:</strong> Mon-Sun: 10am - 10pm</p>
+          </div>
+          <div class="contact-form">
+            <h3>Send Us a Message</h3>
+            <form>
+              <input type="text" placeholder="Your Name" required />
+              <input type="email" placeholder="Your Email" required />
+              <input type="text" placeholder="Subject" />
+              <textarea placeholder="Your Message" required></textarea>
+              <button type="submit" class="btn">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>© 2023 Sovereign Hugo Delicious Bites. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- JavaScript for Mobile Navigation -->
+    <script>
+      document
+        .querySelector(".hamburger")
+        .addEventListener("click", function () {
+          document.querySelector(".nav-links").classList.toggle("active");
+        });
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll(".nav-links a").forEach((link) => {
+        link.addEventListener("click", function () {
+          document.querySelector(".nav-links").classList.remove("active");
+        });
+      });
+    </script>
+  </body>
+</html>
